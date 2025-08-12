@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async(req, res) => {
     try {
-        console.log(req.body)
         const { username, email } = req.body;
         if(!username || !email) throw new Error('Missing Fields')
         await pool.query(`

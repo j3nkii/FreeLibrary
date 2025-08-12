@@ -14,6 +14,8 @@ app.use(express.json());
 
 const USER_ROUTER = require('./routes/user.router');
 app.use('/api/user', USER_ROUTER);
+const MEDIA_ROUTER = require('./routes/media.router');
+app.use('/api/media', MEDIA_ROUTER);
 
 
 module.exports = app;
