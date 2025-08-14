@@ -1,9 +1,8 @@
 -- Users
-INSERT INTO users (id, username, email)
+INSERT INTO users (username, email)
 VALUES
-('11111111-1111-1111-1111-111111111111', 'alice', 'alice@example.com'),
+('11111111-1111-1111-1111-111111111111', 'j3nkii', 'alice@example.com'),
 ('22222222-2222-2222-2222-222222222222', 'bob', 'bob@example.com'),
-('33333333-3333-3333-3333-333333333333', 'charlie', 'charlie@example.com');
 
 -- Groups
 INSERT INTO groups (id, name, description, invite_code)
