@@ -4,7 +4,7 @@ require('dotenv').config();
 const config = {
     host: 'localhost',
     port: 5432,
-    database: process.env.DATABASE_NAME,
+    database: process.env.DB_NAME,
     max: 10,
     idleTimeoutMillis: 30000,
 };
