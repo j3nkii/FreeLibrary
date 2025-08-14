@@ -41,8 +41,8 @@ describe('Users API', () => {
         pool.query.mockRejectedValueOnce(error);
         const newUser = { username: 'existinguser', email: 'new@example.com' };
         const response = await request(app)
-        .post('/api/user')
-        .send(newUser);
+            .post('/api/user')
+            .send(newUser);
         expect(response.status).toBe(400);
         expect(response.body).toEqual({ message: 'Username already taken' });
     });
