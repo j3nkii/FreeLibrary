@@ -17,5 +17,9 @@ app.use('/api/user', USER_ROUTER);
 const MEDIA_ROUTER = require('./routes/media.router');
 app.use('/api/media', MEDIA_ROUTER);
 
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
+
 
 module.exports = app;
