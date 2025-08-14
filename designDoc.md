@@ -180,3 +180,8 @@ Media ||--o{ GroupMedia : "shared to"
 
 - S3 for book cover images (pulled from APIs)
 - Maybe CloudFront CDN in front for faster loading
+
+### External APIs
+
+
+So: TMDB for movies, Discogs for all music formats. Both have good free tiers and solid
