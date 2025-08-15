@@ -43,7 +43,6 @@ const olBookDetailsAPI = async (olKey) => {
         const WORKS_API_RESPONSE = await axios.get(`https://openlibrary.org${olKey}.json`);
         if(API_RES.data.docs.length < 1) throw new Error(`No book found using: ${olKey}`)
         API_RES.data.docs[0].cover_url = openLibraryCoverAPI(API_RES.data.docs[0].cover_i);
-        console.log(WORKS_API_RESPONSE.data)
         API_RES.data.docs[0].description = WORKS_API_RESPONSE.data.description
         return API_RES.data.docs[0];
     } catch (error) {

@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS media;
 CREATE TABLE media (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     type VARCHAR(20) NOT NULL,
     title VARCHAR(255) NOT NULL,
     release_year INTEGER,
@@ -10,6 +10,7 @@ CREATE TABLE media (
     creators JSONB NOT NULL, -- All the people!
     metadata JSONB NOT NULL  -- Everything else
 );
+
 
 
 -- BOOKS

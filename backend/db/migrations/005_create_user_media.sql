@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS user_media;
 CREATE TABLE user_media (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
