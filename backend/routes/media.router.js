@@ -35,9 +35,12 @@ router.post('/', async (req, res) => {
     // okay. so now we need to add a search locally before adding it to db. roger, and a transactional thing so we can add a media+user to a relational table.
     const client = await pool.connect();
     try {
-        const { olKey, userID } = req.body;
-        const API_RESPONSE = await olBookDetailsAPI(olKey);
-        const { title, key, cover_url, author_name, author_key, first_publish_year, cover_i, description } = API_RESPONSE
+        const { external_id, userID, type } = req.body;
+        if(!external_id) throw new Error('External ID not provided');
+        if(!userID) throw new Error('User ID not provided');
+        if(!type) throw new Error('Type not provided');
+        const API_RESPONSE = await olBookDetailsAPI(external_id);
+        const { title, key, cover_url, author_name, first_publish_year, description } = API_RESPONSE
         const params = [
             title,
             'book',
@@ -49,16 +52,20 @@ router.post('/', async (req, res) => {
             {}
         ];
         client.query('BEGIN;');
-        const { rows: [ doesExist ] } = await client.query('SELECT true FROM media WHERE external_id = $1', [ key ]);
+        const { rows: [ doesExist ] } = await client.query('SELECT id FROM media WHERE external_id = $1', [ key ]);
         let result;
         if(!doesExist){
             result = await client.query(`
                 INSERT INTO media (title, type, description, release_year, image_url, external_id, creators, metadata)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING *;
-            `, params)
+            `, params);
+        } else {
+            result = await client.query(`
+                SELECT id FROM media 
+                WHERE external_id = $1
+            `, [ external_id ]);
         }
-        console.log(result.rows[0])
         await client.query(`
             INSERT INTO user_media (user_id, media_id)
             VALUES ($1, $2)
