@@ -28,7 +28,10 @@ const olSearchAPI = async (searchTerm) => {
     try {
         const API_URL = `https://openlibrary.org/search.json?q=${searchTerm}&limit=20`
         const API_RES = await axios.get(API_URL);
-        return API_RES.data.docs.map( row => ({ ...row, coverUrl: openLibraryCoverAPI(row.cover_i)}));
+        return API_RES.data.docs.map( row => ({
+            ...row,
+            coverUrl: openLibraryCoverAPI(row.cover_i)
+        }));
     } catch (error) {
         throw error;
     }
