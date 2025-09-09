@@ -7,6 +7,8 @@ jest.mock('../modules/pool');
 
 describe('Users API', () => {
 
+
+
     afterEach(() => {
         jest.clearAllMocks();
     });
@@ -58,5 +60,7 @@ describe('Users API', () => {
         expect(response.status).toBe(500);
         expect(response.body).toEqual({ message: 'Something went wrong' });
     });
+
+
 
 });
