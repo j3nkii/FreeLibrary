@@ -5,13 +5,22 @@ const path = require('path');
 const pool = require('../modules/pool');
 const router = express.Router();
 const { olBookDetailsAPI, olSearchAPI } = require('../modules/openLibraryAPI');
+const { searchReleases } = require('../modules/discogsAPI');
 
 
 
 router.get('/search', async (req, res) => {
     try {
-        if(!req.query.search) throw new Error('Missing Params')
-        const API_RES = await olSearchAPI(req.query.search);
+        if(!req.query.search) throw new Error('Missing Search Param');
+        if(!req.query.type) throw new Error('Missing Type Param');
+        let searchAPI = null;
+        if(req.query.type === 'book')
+            searchAPI = olSearchAPI;
+        else if(req.query.type === 'music')
+            searchAPI = searchReleases;
+        else 
+            throw new Error('No Type Defined');
+        const API_RES = await searchAPI(req.query.search);
         const result = API_RES.map(row => {
             return {
                 olKey: row.key,
@@ -21,7 +30,6 @@ router.get('/search', async (req, res) => {
                 coverUrl: row.cover_url,
             }
         });
-        console.log(result)
         res.status(200).json({ success: true, data: API_RES });
     } catch (error) {
         console.error(error);
@@ -61,6 +69,7 @@ router.post('/', async (req, res) => {
                 RETURNING *;
             `, params);
         } else {
+            // result = doesExist ???????
             result = await client.query(`
                 SELECT id FROM media 
                 WHERE external_id = $1

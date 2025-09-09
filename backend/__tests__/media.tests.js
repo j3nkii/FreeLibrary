@@ -12,7 +12,7 @@ describe('Media API', () => {
     });
 
     test('GET /media/search', async () => {
-        const response = await request(app).get('/api/media/search?search=harry+potter');
+        const response = await request(app).get('/api/media/search?search=harry+potter&type=book');
         expect(response.status).toBe(200);
     });
 
